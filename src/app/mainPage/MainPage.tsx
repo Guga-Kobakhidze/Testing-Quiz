@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 
-const MainPage = () => {
-  return <div>mainPage</div>;
+const MainPage: React.FC = () => {
+  return <div></div>;
 };
 
 export default MainPage;
