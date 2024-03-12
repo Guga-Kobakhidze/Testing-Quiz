@@ -3,7 +3,8 @@ import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { SwitchModeProp } from "../interfaces/interfaces";
+import { useMode } from "@/app/context/ModeCotext";
+import { SwitchModeProp } from "@/app/interfaces/interfaces";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 60,
@@ -52,12 +53,18 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const CustomizedSwitches: React.FC<SwitchModeProp> = ({ onClick }) => {
+const CustomizedSwitches: React.FC<SwitchModeProp> = ({ onClick, mode }) => {
   return (
-    <FormGroup sx={{ position: "absolute", right: "100px", top: "100px" }}>
+    <FormGroup sx={{ width: "50px" }}>
       <FormControlLabel
         onClick={onClick}
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+        control={
+          <MaterialUISwitch
+            sx={{ m: 1 }}
+            defaultChecked={mode}
+            checked={mode}
+          />
+        }
         label=""
       />
     </FormGroup>

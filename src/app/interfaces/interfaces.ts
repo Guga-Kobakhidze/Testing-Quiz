@@ -24,4 +24,5 @@ export interface ButtonProps {
 
 export interface SwitchModeProp {
   onClick: () => void;
+  mode: boolean;
 }

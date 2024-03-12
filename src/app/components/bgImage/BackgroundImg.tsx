@@ -1,6 +1,6 @@
-import BackgroundLight from "../../assets/pattern-background-desktop-dark.svg";
-import BackgroundDark from "../../assets/pattern-background-desktop-light.svg";
-import { BgImageProps } from "../interfaces/interfaces";
+import BackgroundLight from "../../../../public/assets/pattern-background-desktop-dark.svg";
+import BackgroundDark from "../../../../public/assets/pattern-background-desktop-light.svg";
+import { BgImageProps } from "../../interfaces/interfaces";
 import Image from "next/image";
 import React from "react";
 

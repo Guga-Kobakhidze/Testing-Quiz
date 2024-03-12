@@ -1,17 +1,15 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import ClickButton from "./components/ClickButton";
-import BackgroundImg from "./components/BackgroundImg";
+import ClickButton from "./components/buttons/ClickButton";
+import BackgroundImg from "./components/bgImage/BackgroundImg";
 import { useState } from "react";
-import CustomizedSwitches from "./components/ModeSwitcher";
+import CustomizedSwitches from "./components/buttons/ModeSwitcher";
+import useLocalStorage from "./hooks/useLocalStorage";
+import { useMode } from "./context/ModeCotext";
 
 export default function Home() {
-  const [mode, setMode] = useState<boolean>(true);
-
-  const onClick = () => {
-    setMode((prev) => !prev);
-  };
+  const { mode } = useMode();
 
   return (
     <Box
@@ -29,7 +27,6 @@ export default function Home() {
       <Typography variant="h3" width={600} textAlign={"center"}>
         Find out what development skills you have
       </Typography>
-      <CustomizedSwitches onClick={onClick} />
       <ClickButton content="Start Quiz" />
       <BackgroundImg mode={mode} />
     </Box>
