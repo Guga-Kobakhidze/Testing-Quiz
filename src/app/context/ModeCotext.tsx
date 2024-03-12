@@ -1,40 +1,34 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import useLocalStorage from "@/app/hooks/useLocalStorage";
+import React, { createContext, useContext, ReactNode } from "react";
+import { ModeContext } from "../interfaces/interfaces";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-interface ModeCotext {
-  mode: boolean;
-  toggleMode: () => void;
-}
+const ModeContext = createContext<ModeContext | null>(null);
 
-const HeaderContext = createContext<ModeCotext | undefined>(undefined);
-
-export const HeaderProvider: React.FC<{ children: ReactNode }> = ({
+export const ModeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [mode, setMode] = useLocalStorage("Mode", false);
+  const [mode, setMode] = useLocalStorage("Mode", true);
 
   const toggleMode = () => {
     setMode((prev) => !prev);
   };
 
-  const contextValue: ModeCotext = {
+  const contextValue: ModeContext = {
     mode,
     toggleMode,
   };
 
   return (
-    <HeaderContext.Provider value={contextValue}>
-      {children}
-    </HeaderContext.Provider>
+    <ModeContext.Provider value={contextValue}>{children}</ModeContext.Provider>
   );
 };
 
 export const useMode = () => {
-  const context = useContext(HeaderContext);
+  const context = useContext(ModeContext);
   if (!context) {
-    throw new Error("useMode must be used within a HeaderProvider");
+    throw new Error("useMode must be used within a ModeProvider");
   }
   return context;
 };

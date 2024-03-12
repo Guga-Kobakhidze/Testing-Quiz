@@ -1,9 +1,8 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { useMode } from "@/app/context/ModeCotext";
+import { styled } from "@mui/material/styles";
 import { SwitchModeProp } from "@/app/interfaces/interfaces";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -58,13 +57,7 @@ const CustomizedSwitches: React.FC<SwitchModeProp> = ({ onClick, mode }) => {
     <FormGroup sx={{ width: "50px" }}>
       <FormControlLabel
         onClick={onClick}
-        control={
-          <MaterialUISwitch
-            sx={{ m: 1 }}
-            defaultChecked={mode}
-            checked={mode}
-          />
-        }
+        control={<MaterialUISwitch sx={{ m: 1 }} checked={mode} />}
         label=""
       />
     </FormGroup>
