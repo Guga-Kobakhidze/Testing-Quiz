@@ -14,14 +14,18 @@ export interface DataInterface {
 
 // Props Interface
 
-export interface BgImageProps {
-  mode: boolean;
-}
-
 export interface ButtonProps {
   content: string;
 }
 
 export interface SwitchModeProp {
   onClick: () => void;
+  mode: boolean;
+}
+
+// For Context
+
+export interface ModeContext {
+  mode: boolean;
+  toggleMode: () => void;
 }
