@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { Box } from "@mui/material";
 import React from "react";
 import BackgroundImg from "../components/bgImage/BackgroundImg";

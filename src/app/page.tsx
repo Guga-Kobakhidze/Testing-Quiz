@@ -25,7 +25,7 @@ export default function Home() {
         <Typography variant="h3" width={600} textAlign={"center"}>
           Find out what development skills you have
         </Typography>
-        <ClickButton content="Start Quiz" />
+        <Link href={"/quiz"}><ClickButton content="Start Quiz" /></Link>
       </Box>
     </Box>
   );
