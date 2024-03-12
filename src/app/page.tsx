@@ -4,10 +4,18 @@ import { Box, Button, Typography } from "@mui/material";
 import ClickButton from "./components/buttons/ClickButton";
 import BackgroundImg from "./components/bgImage/BackgroundImg";
 import { useMode } from "./context/ModeCotext";
-import Link from "next/link";
+import useLocalStorage from "./hooks/useLocalStorage";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { mode } = useMode();
+  const [, setTimerStart] = useLocalStorage("timer", false);
+  const router = useRouter();
+
+  const startQuiz = () => {
+    setTimerStart(true);
+    router.push("/quiz");
+  };
 
   return (
     <Box>
@@ -25,7 +33,9 @@ export default function Home() {
         <Typography variant="h3" width={600} textAlign={"center"}>
           Find out what development skills you have
         </Typography>
-        <Link href={"/quiz"}><ClickButton content="Start Quiz" /></Link>
+        <Box onClick={startQuiz}>
+          <ClickButton content="Start Quiz" />
+        </Box>
       </Box>
     </Box>
   );
