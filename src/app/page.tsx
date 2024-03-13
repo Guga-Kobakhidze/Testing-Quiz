@@ -10,10 +10,12 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const { mode } = useMode();
   const [, setTimerStart] = useLocalStorage("timer", false);
+  const [, setValueArr] = useLocalStorage<string[]>("Values", []);
   const router = useRouter();
 
   const startQuiz = () => {
     setTimerStart(true);
+    setValueArr([]);
     router.push("/quiz");
   };
 

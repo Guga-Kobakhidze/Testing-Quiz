@@ -17,21 +17,27 @@ import { useRouter } from "next/navigation";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
+import ResultsPage from "../results/Results";
 
 const MainPage: React.FC = () => {
   const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
 
   const [timerStart] = useLocalStorage("timer", false);
+  const [valueArr, setValueArr] = useLocalStorage<string[]>("Values", []);
   const [timerOut, setTimerOut] = useState<boolean>(false);
 
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
   const [correctPoints, setCorrectPoints] = useState<number>(40);
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
   const { mode } = useMode();
   const router = useRouter();
+
+  window.onload = function () {
+    setValueArr([]);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -41,14 +47,14 @@ const MainPage: React.FC = () => {
     if (questionsIndex >= questions.length - 1) {
       if (titleIndex >= data.length - 1) {
         router.push("/results");
-        return;
+        // return;
       }
       setQuestionsIndex(0);
       setTitleIndex((prev) => prev + 1);
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }
-
+    setValueArr([...valueArr, value]);
     setCorrectPoints((prev) => prev - 1);
     setValue("");
   };
@@ -68,7 +74,7 @@ const MainPage: React.FC = () => {
   return (
     <div>
       {timerOut ? (
-        <div>Time Is Out</div>
+        <ResultsPage />
       ) : (
         <Box
           sx={{
