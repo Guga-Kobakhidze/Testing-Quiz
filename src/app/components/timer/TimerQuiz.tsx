@@ -1,13 +1,17 @@
+import { TimeOutProp } from "@/app/interfaces/interfaces";
 import { Box, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-const TimerQuiz: React.FC = () => {
+const TimerQuiz: React.FC<TimeOutProp> = ({ timer }) => {
   const [seconds, setSeconds] = useState<number>(600);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds > 0) {
         setSeconds((prevSeconds) => prevSeconds - 1);
+      } else {
+        timer(true);
+        clearInterval(interval);
       }
     }, 1000);
 
@@ -17,6 +21,7 @@ const TimerQuiz: React.FC = () => {
   const formatTime = (time: number): string => {
     const minutes = Math.floor(time / 60);
     const remainingSeconds = time % 60;
+
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
