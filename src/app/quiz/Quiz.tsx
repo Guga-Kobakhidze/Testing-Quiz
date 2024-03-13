@@ -1,5 +1,6 @@
 "use client";
-import React, { FormEvent, useState } from "react";
+
+import React, { FormEvent, useState, Dispatch, SetStateAction } from "react";
 import {
   Box,
   Button,
@@ -19,16 +20,23 @@ import Loading from "../components/loading/Loading";
 
 const MainPage: React.FC = () => {
   const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
+
+  const [timerStart] = useLocalStorage("timer", false);
+  const [timerOut, setTimerOut] = useState<boolean>(false);
+
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
+  const [correctPoints, setCorrectPoints] = useState<number>(40);
+
   const [value, setValue] = useState("");
-  const [correctPoints, setCorrectPoints] = useState<number>(40); // how many questions left
-  const [timerStart] = useLocalStorage("timer", false); // timer
+
   const { mode } = useMode();
   const router = useRouter();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+
+    if (!value) return;
 
     if (questionsIndex >= questions.length - 1) {
       if (titleIndex >= data.length - 1) {
@@ -42,6 +50,7 @@ const MainPage: React.FC = () => {
     }
 
     setCorrectPoints((prev) => prev - 1);
+    setValue("");
   };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,92 +66,98 @@ const MainPage: React.FC = () => {
   const answers = questions[questionsIndex].options;
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      color={mode ? "black" : "white"}
-    >
-      <BackgroundImg />
-      <Box
-        position={"relative"}
-        width={700}
-        bgcolor={mode ? "#fff" : "#3156757f"}
-        borderRadius={5}
-        boxShadow={"5px 5px 5px #3156757f"}
-      >
-        <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 3 }} variant="standard">
-            {quest && (
-              <Box height={100} mb={2} ml={1}>
-                <FormLabel
-                  focused={false}
-                  color="primary"
-                  id="demo-error-radios"
+    <div>
+      {timerOut ? (
+        <div>Time Is Out</div>
+      ) : (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          color={mode ? "black" : "white"}
+        >
+          <BackgroundImg />
+          <Box
+            position={"relative"}
+            width={700}
+            bgcolor={mode ? "#fff" : "#3156757f"}
+            borderRadius={5}
+            boxShadow={"5px 5px 5px #3156757f"}
+          >
+            <form onSubmit={handleSubmit}>
+              <FormControl sx={{ m: 3 }} variant="standard">
+                {quest && (
+                  <Box height={100} mb={2.2} ml={1}>
+                    <FormLabel
+                      focused={false}
+                      color="primary"
+                      id="demo-error-radios"
+                      sx={{
+                        fontSize: "2rem",
+                        color: mode ? "black" : "white",
+                      }}
+                    >
+                      {quest}
+                    </FormLabel>
+                    <Box
+                      position={"absolute"}
+                      top={-50}
+                      left={-10}
+                    >{`${correctPoints} / 40`}</Box>
+                  </Box>
+                )}
+                <Box mb={5}>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-error-radios"
+                    name="quiz"
+                    value={value}
+                    onChange={handleRadioChange}
+                  >
+                    {answers &&
+                      answers.map((opt, index) => (
+                        <FormControlLabel
+                          key={index}
+                          value={opt}
+                          control={<Radio />}
+                          label={opt}
+                          sx={{
+                            m: 1,
+                            width: 300,
+                            height: 50,
+                            border: `1px solid ${mode ? "black" : "white"}`,
+                            borderRadius: 2,
+                          }}
+                        />
+                      ))}
+                  </RadioGroup>
+                </Box>
+                <Button
                   sx={{
-                    fontSize: "2rem",
+                    ml: 1,
+                    width: "200px",
                     color: mode ? "black" : "white",
                   }}
+                  type="submit"
+                  variant="contained"
                 >
-                  {quest}
-                </FormLabel>
-                <Box
-                  position={"absolute"}
-                  top={-50}
-                  left={-10}
-                >{`${correctPoints} / 40`}</Box>
-              </Box>
-            )}
-            <Box mb={5}>
-              <RadioGroup
-                row
-                aria-labelledby="demo-error-radios"
-                name="quiz"
-                value={value}
-                onChange={handleRadioChange}
-              >
-                {answers &&
-                  answers.map((opt, index) => (
-                    <FormControlLabel
-                      key={index}
-                      value={opt}
-                      control={<Radio />}
-                      label={opt}
-                      sx={{
-                        m: 1,
-                        width: 300,
-                        height: 50,
-                        border: `1px solid ${mode ? "black" : "white"}`,
-                        borderRadius: 2,
-                      }}
-                    />
-                  ))}
-              </RadioGroup>
-            </Box>
-            <Button
-              sx={{
-                ml: 1,
-                width: "200px",
-                color: mode ? "black" : "white",
-              }}
-              type="submit"
-              variant="outlined"
-            >
-              Next Question
-            </Button>
-          </FormControl>
-          {timerStart && (
-            <Box position={"absolute"} bottom={20} right={35}>
-              <TimerQuiz />
-            </Box>
-          )}
-        </form>
-      </Box>
-    </Box>
+                  Next Question
+                </Button>
+              </FormControl>
+              {timerStart && (
+                <Box position={"absolute"} bottom={20} right={35}>
+                  <TimerQuiz timer={setTimerOut} />
+                </Box>
+              )}
+            </form>
+          </Box>
+        </Box>
+      )}
+    </div>
   );
 };
 

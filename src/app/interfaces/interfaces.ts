@@ -1,5 +1,7 @@
 // Data interface
 
+import { Dispatch, SetStateAction } from "react";
+
 export interface IQuestion {
   question: string;
   options: string[];
@@ -28,4 +30,10 @@ export interface SwitchModeProp {
 export interface ModeContext {
   mode: boolean;
   toggleMode: () => void;
+}
+
+// For timer
+
+export interface TimeOutProp {
+  timer: Dispatch<SetStateAction<boolean>>;
 }
