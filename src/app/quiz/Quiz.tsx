@@ -17,21 +17,28 @@ import { useRouter } from "next/navigation";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
+import ResultsPage from "../results/Results";
+import { ValueArr } from "../interfaces/interfaces";
 
 const MainPage: React.FC = () => {
   const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
 
   const [timerStart] = useLocalStorage("timer", false);
+  const [valueArr, setValueArr] = useLocalStorage<ValueArr[]>("Values", []);
   const [timerOut, setTimerOut] = useState<boolean>(false);
 
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
   const [correctPoints, setCorrectPoints] = useState<number>(40);
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
   const { mode } = useMode();
   const router = useRouter();
+
+  window.onload = function () {
+    setValueArr([]);
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -41,14 +48,14 @@ const MainPage: React.FC = () => {
     if (questionsIndex >= questions.length - 1) {
       if (titleIndex >= data.length - 1) {
         router.push("/results");
-        return;
+        // return;
       }
       setQuestionsIndex(0);
       setTitleIndex((prev) => prev + 1);
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }
-
+    setValueArr([...valueArr, { checked: value, correct: answer }]);
     setCorrectPoints((prev) => prev - 1);
     setValue("");
   };
@@ -64,11 +71,14 @@ const MainPage: React.FC = () => {
   const questions = data[titleIndex]?.questions;
   const quest = questions[questionsIndex].question;
   const answers = questions[questionsIndex].options;
+  const answer = questions[questionsIndex].answer;
+
+  console.log(valueArr);
 
   return (
     <div>
       {timerOut ? (
-        <div>Time Is Out</div>
+        <ResultsPage />
       ) : (
         <Box
           sx={{
@@ -91,7 +101,7 @@ const MainPage: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <FormControl sx={{ m: 3 }} variant="standard">
                 {quest && (
-                  <Box height={100} mb={2.2} ml={1}>
+                  <Box height={100} mb={2.4} ml={1}>
                     <FormLabel
                       focused={false}
                       color="primary"
@@ -110,7 +120,7 @@ const MainPage: React.FC = () => {
                     >{`${correctPoints} / 40`}</Box>
                   </Box>
                 )}
-                <Box mb={5}>
+                <Box mb={6}>
                   <RadioGroup
                     row
                     aria-labelledby="demo-error-radios"
@@ -126,7 +136,7 @@ const MainPage: React.FC = () => {
                           control={<Radio />}
                           label={opt}
                           sx={{
-                            m: 1,
+                            m: 1.5,
                             width: 300,
                             height: 50,
                             border: `1px solid ${mode ? "black" : "white"}`,

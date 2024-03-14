@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const { mode, toggleMode } = useMode();
 
   return (
-    <Box sx={{ position: "absolute", top: "40px", right: "80px", zIndex: 10 }}>
+    <Box sx={{ position: "fixed", top: "40px", right: "80px", zIndex: 10 }}>
       <CustomizedSwitches onClick={toggleMode} mode={mode} />
     </Box>
   );

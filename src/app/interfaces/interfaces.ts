@@ -37,3 +37,10 @@ export interface ModeContext {
 export interface TimeOutProp {
   timer: Dispatch<SetStateAction<boolean>>;
 }
+
+//
+
+export interface ValueArr {
+  checked: string;
+  correct: string;
+}

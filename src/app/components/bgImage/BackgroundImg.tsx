@@ -11,9 +11,9 @@ const BackgroundImg: React.FC = () => {
     <Box
       bgcolor={mode ? "white" : "#234663"}
       component="section"
-      height={"100vh"}
+      // height={"100vh"}
       sx={{
-        position: "absolute",
+        position: "fixed",
         top: "0",
         left: "0",
         right: "0",
