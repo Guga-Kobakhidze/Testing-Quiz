@@ -18,12 +18,13 @@ import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
 import ResultsPage from "../results/Results";
+import { ValueArr } from "../interfaces/interfaces";
 
 const MainPage: React.FC = () => {
   const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
 
   const [timerStart] = useLocalStorage("timer", false);
-  const [valueArr, setValueArr] = useLocalStorage<string[]>("Values", []);
+  const [valueArr, setValueArr] = useLocalStorage<ValueArr[]>("Values", []);
   const [timerOut, setTimerOut] = useState<boolean>(false);
 
   const [titleIndex, setTitleIndex] = useState<number>(0);
@@ -54,7 +55,7 @@ const MainPage: React.FC = () => {
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }
-    setValueArr([...valueArr, value]);
+    setValueArr([...valueArr, { checked: value, correct: answer }]);
     setCorrectPoints((prev) => prev - 1);
     setValue("");
   };
@@ -70,6 +71,9 @@ const MainPage: React.FC = () => {
   const questions = data[titleIndex]?.questions;
   const quest = questions[questionsIndex].question;
   const answers = questions[questionsIndex].options;
+  const answer = questions[questionsIndex].answer;
+
+  console.log(valueArr);
 
   return (
     <div>
@@ -97,7 +101,7 @@ const MainPage: React.FC = () => {
             <form onSubmit={handleSubmit}>
               <FormControl sx={{ m: 3 }} variant="standard">
                 {quest && (
-                  <Box height={100} mb={2.2} ml={1}>
+                  <Box height={100} mb={2.4} ml={1}>
                     <FormLabel
                       focused={false}
                       color="primary"
@@ -116,7 +120,7 @@ const MainPage: React.FC = () => {
                     >{`${correctPoints} / 40`}</Box>
                   </Box>
                 )}
-                <Box mb={5}>
+                <Box mb={6}>
                   <RadioGroup
                     row
                     aria-labelledby="demo-error-radios"
@@ -132,7 +136,7 @@ const MainPage: React.FC = () => {
                           control={<Radio />}
                           label={opt}
                           sx={{
-                            m: 1,
+                            m: 1.5,
                             width: 300,
                             height: 50,
                             border: `1px solid ${mode ? "black" : "white"}`,

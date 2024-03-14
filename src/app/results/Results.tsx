@@ -4,9 +4,10 @@ import React from "react";
 import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useMode } from "../context/ModeCotext";
+import { ValueArr } from "../interfaces/interfaces";
 
 const ResultsPage = () => {
-  const [valueArr] = useLocalStorage<string[]>("Values", []);
+  const [valueArr] = useLocalStorage<ValueArr[]>("Values", []);
   const { mode } = useMode();
 
   return (
@@ -16,7 +17,8 @@ const ResultsPage = () => {
       <Box>
         {valueArr.map((value, index) => (
           <Typography>
-            {index + 1}: {value}
+            {index + 1}: your answer "{value.checked}" correct answer "
+            {value.correct}"
           </Typography>
         ))}
       </Box>
