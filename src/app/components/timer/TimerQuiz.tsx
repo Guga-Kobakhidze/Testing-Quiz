@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from "react";
 import { TimeOutProp } from "@/app/interfaces/interfaces";
 import { Box, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
 
 const TimerQuiz: React.FC<TimeOutProp> = ({ timer }) => {
   const [seconds, setSeconds] = useState<number>(600);

@@ -27,9 +27,11 @@ export interface SwitchModeProp {
 
 // For Context
 
-export interface ModeContext {
+export interface QuizModeContext {
   mode: boolean;
   toggleMode: () => void;
+  valueArr: ValueArr[];
+  setValueArr: (value: ValueArr[]) => void;
 }
 
 // For timer

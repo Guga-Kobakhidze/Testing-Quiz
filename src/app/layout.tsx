@@ -1,8 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import { ModeProvider } from "./context/QuizModeCotext";
 import Header from "./components/header/Header";
-import { ModeProvider } from "./context/ModeCotext";
 
 const inter = Inter({ subsets: ["latin"] });
 

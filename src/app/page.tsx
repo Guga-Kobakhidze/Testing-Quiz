@@ -1,16 +1,17 @@
 "use client";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useMode } from "./context/QuizModeCotext";
 import ClickButton from "./components/buttons/ClickButton";
 import BackgroundImg from "./components/bgImage/BackgroundImg";
-import { useMode } from "./context/ModeCotext";
 import useLocalStorage from "./hooks/useLocalStorage";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { mode } = useMode();
   const [, setTimerStart] = useLocalStorage("timer", false);
   const [, setValueArr] = useLocalStorage<string[]>("Values", []);
+
   const router = useRouter();
 
   const startQuiz = () => {

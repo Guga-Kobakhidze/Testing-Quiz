@@ -1,6 +1,8 @@
 "use client";
 
 import React, { FormEvent, useState, Dispatch, SetStateAction } from "react";
+import { useMode } from "../context/QuizModeCotext";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -12,19 +14,15 @@ import {
 } from "@mui/material";
 import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useFetch from "../hooks/useFetch";
-import { useMode } from "../context/ModeCotext";
-import { useRouter } from "next/navigation";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
 import ResultsPage from "../results/Results";
-import { ValueArr } from "../interfaces/interfaces";
 
 const MainPage: React.FC = () => {
-  const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
+  const { data, loading } = useFetch("http://localhost:4000/quizzes");
 
   const [timerStart] = useLocalStorage("timer", false);
-  const [valueArr, setValueArr] = useLocalStorage<ValueArr[]>("Values", []);
   const [timerOut, setTimerOut] = useState<boolean>(false);
 
   const [titleIndex, setTitleIndex] = useState<number>(0);
@@ -33,7 +31,7 @@ const MainPage: React.FC = () => {
 
   const [value, setValue] = useState<string>("");
 
-  const { mode } = useMode();
+  const { mode, valueArr, setValueArr } = useMode();
   const router = useRouter();
 
   window.onload = function () {
@@ -107,7 +105,7 @@ const MainPage: React.FC = () => {
                       color="primary"
                       id="demo-error-radios"
                       sx={{
-                        fontSize: "2rem",
+                        fontSize: "1.5rem",
                         color: mode ? "black" : "white",
                       }}
                     >
