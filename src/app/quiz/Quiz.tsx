@@ -1,6 +1,8 @@
 "use client";
 
 import React, { FormEvent, useState, Dispatch, SetStateAction } from "react";
+import { useMode } from "../context/QuizModeCotext";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -12,15 +14,13 @@ import {
 } from "@mui/material";
 import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useFetch from "../hooks/useFetch";
-import { useMode } from "../context/QuizModeCotext";
-import { useRouter } from "next/navigation";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
 import ResultsPage from "../results/Results";
 
 const MainPage: React.FC = () => {
-  const { data, loading, error } = useFetch("http://localhost:4000/quizzes");
+  const { data, loading } = useFetch("http://localhost:4000/quizzes");
 
   const [timerStart] = useLocalStorage("timer", false);
   const [timerOut, setTimerOut] = useState<boolean>(false);
@@ -105,7 +105,7 @@ const MainPage: React.FC = () => {
                       color="primary"
                       id="demo-error-radios"
                       sx={{
-                        fontSize: "2rem",
+                        fontSize: "1.5rem",
                         color: mode ? "black" : "white",
                       }}
                     >

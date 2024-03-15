@@ -1,7 +1,8 @@
 "use client";
-import { Alert, Box, Typography } from "@mui/material";
+
 import React from "react";
 import BackgroundImg from "../components/bgImage/BackgroundImg";
+import { Alert, Box, Typography } from "@mui/material";
 import { useMode } from "../context/QuizModeCotext";
 
 const ResultsPage = () => {

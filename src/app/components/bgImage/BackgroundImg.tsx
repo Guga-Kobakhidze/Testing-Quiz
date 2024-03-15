@@ -1,9 +1,9 @@
-import { useMode } from "@/app/context/QuizModeCotext";
-import BackgroundLight from "../../../../public/assets/pattern-background-desktop-dark.svg";
-import BackgroundDark from "../../../../public/assets/pattern-background-desktop-light.svg";
 import Image from "next/image";
 import React from "react";
 import { Box } from "@mui/material";
+import { useMode } from "@/app/context/QuizModeCotext";
+import BackgroundLight from "../../../../public/assets/pattern-background-desktop-dark.svg";
+import BackgroundDark from "../../../../public/assets/pattern-background-desktop-light.svg";
 
 const BackgroundImg: React.FC = () => {
   const { mode } = useMode();
