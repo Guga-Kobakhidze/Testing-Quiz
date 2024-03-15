@@ -2,7 +2,7 @@
 
 import React from "react";
 import CustomizedSwitches from "../buttons/ModeSwitcher";
-import { useMode } from "@/app/context/ModeCotext";
+import { useMode } from "@/app/context/QuizModeCotext";
 import { Box } from "@mui/material";
 
 const Header: React.FC = () => {

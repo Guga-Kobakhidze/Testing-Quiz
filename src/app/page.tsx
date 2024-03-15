@@ -3,7 +3,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import ClickButton from "./components/buttons/ClickButton";
 import BackgroundImg from "./components/bgImage/BackgroundImg";
-import { useMode } from "./context/ModeCotext";
+import { useMode } from "./context/QuizModeCotext";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 
