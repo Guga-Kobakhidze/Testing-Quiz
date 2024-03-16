@@ -36,18 +36,18 @@ export interface QuizModeContext {
   setSeconds: (value: number) => void;
   time: ITimer;
   setTime: (value: ITimer) => void;
-  ref: MutableRefObject<number | null>
+  ref: MutableRefObject<number | null>;
 }
 
 // For timer
 
 // TImer state
 export interface ITimer {
-  html: number
-  css: number
-  javascript: number
-  accessibility: number
-  timer: number
+  html: number;
+  css: number;
+  javascript: number;
+  accessibility: number;
+  timer: number;
 }
 
 //

@@ -3,8 +3,8 @@ import { Box, Typography } from "@mui/material";
 import { useMode } from "@/app/context/QuizModeCotext";
 
 const TimerQuiz = () => {
-  const {ref} = useMode()
-  const [seconds, setSeconds] = useState<number>(0)
+  const { ref } = useMode();
+  const [seconds, setSeconds] = useState<number>(0);
   useEffect(() => {
     const interval = setInterval(() => {
       if (ref.current != null) {
@@ -25,8 +25,7 @@ const TimerQuiz = () => {
 
   return (
     <Box display={"flex"} gap={1} alignItems={"center"}>
-      <Typography variant="h6" mb={0.5}>
-      </Typography>
+      <Typography variant="h6" mb={0.5}></Typography>
       <Typography variant="subtitle1">{formatTime(seconds)}</Typography>
     </Box>
   );
