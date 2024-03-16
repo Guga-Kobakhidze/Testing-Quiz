@@ -17,27 +17,17 @@ import useFetch from "../hooks/useFetch";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
-import ResultsPage from "../results/Results";
 
 const MainPage: React.FC = () => {
   const { data, loading } = useFetch("http://localhost:4000/quizzes");
 
-  const [timerStart] = useLocalStorage("timer", false);
-  const [timerOut, setTimerOut] = useState<boolean>(false);
-
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
-  const [correctPoints, setCorrectPoints] = useState<number>(40);
-
+  const [correctPoints, setCorrectPoints] = useState<number>(1);
   const [value, setValue] = useState<string>("");
 
-  const { mode, valueArr, setValueArr } = useMode();
+  const { mode, valueArr, setValueArr, seconds, setTime, time, ref } = useMode();
   const router = useRouter();
-
-  window.onload = function () {
-    setValueArr([]);
-  };
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
@@ -49,12 +39,15 @@ const MainPage: React.FC = () => {
         // return;
       }
       setQuestionsIndex(0);
+      const title = data[titleIndex].title.toLocaleLowerCase()
       setTitleIndex((prev) => prev + 1);
+      setTime({...time, [title]: seconds})
+      
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }
     setValueArr([...valueArr, { checked: value, correct: answer }]);
-    setCorrectPoints((prev) => prev - 1);
+    setCorrectPoints((prev) => prev + 1); // ??????
     setValue("");
   };
 
@@ -71,13 +64,8 @@ const MainPage: React.FC = () => {
   const answers = questions[questionsIndex].options;
   const answer = questions[questionsIndex].answer;
 
-  console.log(valueArr);
-
   return (
     <div>
-      {timerOut ? (
-        <ResultsPage />
-      ) : (
         <Box
           sx={{
             width: "100%",
@@ -156,15 +144,12 @@ const MainPage: React.FC = () => {
                   Next Question
                 </Button>
               </FormControl>
-              {timerStart && (
                 <Box position={"absolute"} bottom={20} right={35}>
-                  <TimerQuiz timer={setTimerOut} />
+                  <TimerQuiz />
                 </Box>
-              )}
             </form>
           </Box>
         </Box>
-      )}
     </div>
   );
 };

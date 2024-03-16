@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { TimeOutProp } from "@/app/interfaces/interfaces";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
+import { useMode } from "@/app/context/QuizModeCotext";
 
-const TimerQuiz: React.FC<TimeOutProp> = ({ timer }) => {
-  const [seconds, setSeconds] = useState<number>(600);
-
+const TimerQuiz = () => {
+  const {ref} = useMode()
+  const [seconds, setSeconds] = useState<number>(0)
   useEffect(() => {
     const interval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds((prevSeconds) => prevSeconds - 1);
-      } else {
-        timer(true);
-        clearInterval(interval);
+      if (ref.current != null) {
+        ref.current = seconds + 1;
       }
+      setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -28,7 +26,6 @@ const TimerQuiz: React.FC<TimeOutProp> = ({ timer }) => {
   return (
     <Box display={"flex"} gap={1} alignItems={"center"}>
       <Typography variant="h6" mb={0.5}>
-        Quiz ends in:
       </Typography>
       <Typography variant="subtitle1">{formatTime(seconds)}</Typography>
     </Box>

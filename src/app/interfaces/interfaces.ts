@@ -1,6 +1,6 @@
 // Data interface
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 
 export interface IQuestion {
   question: string;
@@ -32,12 +32,22 @@ export interface QuizModeContext {
   toggleMode: () => void;
   valueArr: ValueArr[];
   setValueArr: (value: ValueArr[]) => void;
+  seconds: number;
+  setSeconds: (value: number) => void;
+  time: ITimer;
+  setTime: (value: ITimer) => void;
+  ref: MutableRefObject<number | null>
 }
 
 // For timer
 
-export interface TimeOutProp {
-  timer: Dispatch<SetStateAction<boolean>>;
+// TImer state
+export interface ITimer {
+  html: number
+  css: number
+  javascript: number
+  accessebility: number
+  timer: number
 }
 
 //
