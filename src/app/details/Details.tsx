@@ -15,6 +15,14 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 const Details = () => {
     const { mode, valueArr, time } = useMode();
+
+    const calculation = {
+      html: time.html,
+      css: time.css - time.html,
+      javascript: time.javascript - time.css,
+      accessibility: time.accessibility - time.javascript,
+      total: time.accessibility
+    }
   return (
     <Box color={mode ? "black" : "white"}>
        <Link href="/results"><Typography mt={5} sx={{fontSize: '1.2rem', cursor: 'pointer', paddingLeft: 10}} color={mode ? "black" : "white"}>go back</Typography></Link>
@@ -31,14 +39,16 @@ const Details = () => {
             <StyledTableCell>CSS</StyledTableCell>
             <StyledTableCell>JavaScript</StyledTableCell>
             <StyledTableCell>Accessibility</StyledTableCell>
+            <StyledTableCell>Total</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-          <TableCell>{time.html}</TableCell>
-          <TableCell>{time.css}</TableCell>
-          <TableCell>{time.javascript}</TableCell>
-          <TableCell>{time.accessibility}</TableCell>
+          <TableCell>{calculation.html}</TableCell>
+          <TableCell>{calculation.css}</TableCell>
+          <TableCell>{calculation.javascript}</TableCell>
+          <TableCell>{calculation.accessibility}</TableCell>
+          <TableCell>{calculation.total}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
