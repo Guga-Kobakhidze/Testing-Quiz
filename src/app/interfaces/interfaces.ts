@@ -46,7 +46,7 @@ export interface ITimer {
   html: number
   css: number
   javascript: number
-  accessebility: number
+  accessibility: number
   timer: number
 }
 

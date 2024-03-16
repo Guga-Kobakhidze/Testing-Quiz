@@ -41,8 +41,9 @@ const MainPage: React.FC = () => {
       setQuestionsIndex(0);
       const title = data[titleIndex].title.toLocaleLowerCase()
       setTitleIndex((prev) => prev + 1);
-      setTime({...time, [title]: seconds})
-      
+      let sec = ref.current
+      setTime({...time, [title]: sec})
+      console.log(sec)
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }

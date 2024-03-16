@@ -6,10 +6,18 @@ import { useMode } from '../context/QuizModeCotext';
 import Link from 'next/link';
 
 const Details = () => {
-    const { mode, valueArr } = useMode();
+    const { mode, valueArr, time } = useMode();
   return (
     <Box>
         <Link href="/results">go back</Link>
+
+      <Box>
+        Time taken of each section:
+        <Typography>HTML: {time.html}</Typography>
+        <Typography>CSS: {time.css}</Typography>
+        <Typography>JAVASCRIPT: {time.javascript}</Typography>
+        <Typography>ACCESSEBILITY: {time.accessibility}</Typography>
+      </Box>
     {valueArr.map(({ correct, checked }, index) => (
       <Typography
         key={index}

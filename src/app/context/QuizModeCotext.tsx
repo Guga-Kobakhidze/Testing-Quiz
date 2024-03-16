@@ -16,7 +16,7 @@ export const ModeProvider: React.FC<{ children: ReactNode }> = ({
     html: 0,
     css: 0,
     javascript: 0,
-    accessebility: 0,
+    accessibility: 0,
     timer: 0
   })
   const ref = useRef<number>(0)
