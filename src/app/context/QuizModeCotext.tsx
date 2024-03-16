@@ -25,7 +25,8 @@ export const ModeProvider: React.FC<{ children: ReactNode }> = ({
     accessibility: 0,
     timer: 0,
   });
-  const ref = useRef<number>(0);
+
+  const ref = useRef<number | null>(null);
 
   const toggleMode = () => {
     setMode((prev) => !prev);

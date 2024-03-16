@@ -56,3 +56,8 @@ export interface ValueArr {
   checked: string;
   correct: string;
 }
+
+export interface TableModeProps {
+  titles: string[];
+  values: number[] | (string | number)[];
+}

@@ -15,7 +15,6 @@ import {
 import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useFetch from "../hooks/useFetch";
 import TimerQuiz from "../components/timer/TimerQuiz";
-import useLocalStorage from "../hooks/useLocalStorage";
 import Loading from "../components/loading/Loading";
 
 const MainPage: React.FC = () => {
@@ -26,8 +25,7 @@ const MainPage: React.FC = () => {
   const [correctPoints, setCorrectPoints] = useState<number>(1);
   const [value, setValue] = useState<string>("");
 
-  const { mode, valueArr, setValueArr, seconds, setTime, time, ref } =
-    useMode();
+  const { mode, valueArr, setValueArr, setTime, time, ref } = useMode();
   const router = useRouter();
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -37,14 +35,15 @@ const MainPage: React.FC = () => {
     if (questionsIndex >= questions.length - 1) {
       if (titleIndex >= data.length - 1) {
         router.push("/results");
-        // return;
       }
+
       setQuestionsIndex(0);
       const title = data[titleIndex].title.toLocaleLowerCase();
+
       setTitleIndex((prev) => prev + 1);
       let sec = ref.current;
+
       setTime({ ...time, [title]: sec });
-      console.log(sec);
     } else {
       setQuestionsIndex((prev) => prev + 1);
     }
