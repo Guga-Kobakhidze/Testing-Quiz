@@ -12,7 +12,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
 
 const ResultsPage = () => {
-  const { mode, valueArr, time, ref } = useMode();
+  const { mode, valueArr, ref, setValueArr, setTime } = useMode();
   let count: number = 0
 
   valueArr.forEach(({ checked, correct }) => {
@@ -20,7 +20,7 @@ const ResultsPage = () => {
       count = count + 1;
     }
   });
-console.log(time)
+
   const percentage: number = (count / 40) * 100
 
   const formatTime = (time: number): string => {
@@ -29,6 +29,18 @@ console.log(time)
 
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
+
+  const resetValues = () => {
+    ref.current = 0
+    setValueArr([])
+    setTime({
+      html: 0,
+      css: 0,
+      javascript: 0,
+      accessibility: 0,
+      timer: 0
+    })
+  }
 
   return (
     <Box color={mode ? "black" : "white"} sx={{marginTop: '15vh'}}>
@@ -61,7 +73,7 @@ console.log(time)
     <Link href="/details">
       <Typography sx={{textAlign: 'center', textDecorationLine: 'underline'}} mt={5} color={mode ? "black" : "white"}>See more details</Typography>
       </Link>
-      <Link href="/">
+      <Link href="/" onClick={resetValues}>
       <Typography sx={{textAlign: 'center'}} mt={5} color={mode ? "black" : "white"}>Return to home page</Typography>
       </Link>
     </Box>

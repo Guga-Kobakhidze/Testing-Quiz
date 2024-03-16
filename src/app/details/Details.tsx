@@ -48,7 +48,7 @@ const Details = () => {
           <TableCell>{calculation.css}</TableCell>
           <TableCell>{calculation.javascript}</TableCell>
           <TableCell>{calculation.accessibility}</TableCell>
-          <TableCell>{calculation.total}</TableCell>
+          <TableCell>{calculation.total} (Time)</TableCell>
           </TableRow>
         </TableBody>
       </Table>
