@@ -27,6 +27,8 @@ const ResultsPage = () => {
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
+  const TimeFormat = formatTime(ref.current || 0);
+
   const resetValues = () => {
     ref.current = 0;
     setValueArr([]);
@@ -47,12 +49,7 @@ const ResultsPage = () => {
       </Typography>
       <TableMode
         titles={["Total Questions", "Correct Answers", "Percentage", "Time"]}
-        values={[
-          40,
-          count,
-          percentage.toFixed(2) + " %",
-          formatTime(ref.current || 0),
-        ]}
+        values={[40, count, percentage.toFixed(2) + " %", TimeFormat]}
       />
       <Box
         sx={{

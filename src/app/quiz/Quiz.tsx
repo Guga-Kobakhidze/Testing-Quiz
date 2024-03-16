@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState, Dispatch, SetStateAction } from "react";
+import React, { FormEvent, useState } from "react";
 import { useMode } from "../context/QuizModeCotext";
 import { useRouter } from "next/navigation";
 import {
