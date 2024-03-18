@@ -16,6 +16,7 @@ import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useFetch from "../hooks/useFetch";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import Loading from "../components/loading/Loading";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const MainPage: React.FC = () => {
   const { data, loading } = useFetch("http://localhost:4000/quizzes");
@@ -23,6 +24,13 @@ const MainPage: React.FC = () => {
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
   const [correctPoints, setCorrectPoints] = useState<number>(1);
+
+  // მსგავსი ლოგიკა
+
+  // const [titleIndex, setTitleIndex] = useLocalStorage("Titles", 0);
+  // const [questionsIndex, setQuestionsIndex] = useLocalStorage("quizzes", 0);
+  // const [correctPoints, setCorrectPoints] = useLocalStorage("Points", 1);
+
   const [value, setValue] = useState<string>("");
 
   const { mode, valueArr, setValueArr, setTime, time, ref } = useMode();

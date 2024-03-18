@@ -10,13 +10,18 @@ import useLocalStorage from "./hooks/useLocalStorage";
 export default function Home() {
   const { mode } = useMode();
   const [, setTimerStart] = useLocalStorage("timer", false);
-  const [, setValueArr] = useLocalStorage<string[]>("Values", []);
+
+  // const [, setTitleIndex] = useLocalStorage("Titles", 0);
+  // const [, setQuestionsIndex] = useLocalStorage("quizzes", 0);
+  // const [, setCorrectPoints] = useLocalStorage("Points", 1);
 
   const router = useRouter();
 
   const startQuiz = () => {
     setTimerStart(true);
-    setValueArr([]);
+    // setTitleIndex(0);
+    // setQuestionsIndex(0);
+    // setCorrectPoints(1);
     router.push("/quiz");
   };
 
