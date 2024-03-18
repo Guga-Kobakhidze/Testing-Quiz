@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useMode } from "../context/QuizModeCotext";
 import { useRouter } from "next/navigation";
 import {
@@ -16,7 +16,6 @@ import BackgroundImg from "../components/bgImage/BackgroundImg";
 import useFetch from "../hooks/useFetch";
 import TimerQuiz from "../components/timer/TimerQuiz";
 import Loading from "../components/loading/Loading";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 const MainPage: React.FC = () => {
   const { data, loading } = useFetch("http://localhost:4000/quizzes");
@@ -24,21 +23,26 @@ const MainPage: React.FC = () => {
   const [titleIndex, setTitleIndex] = useState<number>(0);
   const [questionsIndex, setQuestionsIndex] = useState<number>(0);
   const [correctPoints, setCorrectPoints] = useState<number>(1);
-
-  // მსგავსი ლოგიკა
-
-  // const [titleIndex, setTitleIndex] = useLocalStorage("Titles", 0);
-  // const [questionsIndex, setQuestionsIndex] = useLocalStorage("quizzes", 0);
-  // const [correctPoints, setCorrectPoints] = useLocalStorage("Points", 1);
-
   const [value, setValue] = useState<string>("");
-
+  const [warning, setWarning] = useState<boolean>(false);
   const { mode, valueArr, setValueArr, setTime, time, ref } = useMode();
+
   const router = useRouter();
+
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  });
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    if (!value) return;
+    if (!value) {
+      setWarning(true);
+      return;
+    } else {
+      setWarning(false);
+    }
 
     if (questionsIndex >= questions.length - 1) {
       if (titleIndex >= data.length - 1) {
@@ -74,7 +78,7 @@ const MainPage: React.FC = () => {
   const answer = questions[questionsIndex].answer;
 
   return (
-    <div>
+    <Box>
       <Box
         sx={{
           width: "100%",
@@ -146,11 +150,15 @@ const MainPage: React.FC = () => {
                   ml: 1,
                   width: "200px",
                   color: mode ? "black" : "white",
+                  bgcolor: warning ? "red" : "",
+                  "&:hover": {
+                    bgcolor: warning ? "red" : "",
+                  },
                 }}
                 type="submit"
                 variant="contained"
               >
-                Next Question
+                {warning ? "select the answer" : "next question"}
               </Button>
             </FormControl>
             <Box position={"absolute"} bottom={20} right={35}>
@@ -159,7 +167,7 @@ const MainPage: React.FC = () => {
           </form>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 
