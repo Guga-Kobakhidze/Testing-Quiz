@@ -16,7 +16,7 @@ const Details = () => {
     css: time.css - time.html,
     javascript: time.javascript - time.css,
     accessibility: time.accessibility - time.javascript,
-    total: time.accessibility,
+    total: `${time.accessibility} seconds`,
   };
 
   return (
